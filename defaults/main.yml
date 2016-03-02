@@ -1,0 +1,6 @@
+
+sshkey_folder: ~/.ssh/
+sshkey_user: root
+sshkey_group: root
+sshkey_setup_profile: false
+sshkey_files: []

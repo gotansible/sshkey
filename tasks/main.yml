@@ -1,0 +1,40 @@
+---
+
+- name: sshkey - create ssh destination folder
+  file:
+    state=directory
+    path={{ sshkey_folder }}
+    mode=0700
+    owner={{ sshkey_user }}
+    group={{ sshkey_group }}
+    recurse=true
+
+- name: sshkey - copy keys
+  copy:
+    src={{ item }}
+    dest={{ sshkey_folder }}
+    mode=600
+    owner={{ sshkey_user }}
+    group={{ sshkey_group }}
+  with_items: sshkey_files
+
+- name: sshkey - .profile
+  template:
+    src=profile-ssh.j2
+    dest=/home/{{ sshkey_user }}/.profile-ssh
+    mode=640
+    owner={{ sshkey_user }}
+    group={{ sshkey_group }}
+  when: sshkey_setup_profile
+
+- name: sshkey - profile-ssh
+  lineinfile:
+    state: present
+    dest: /home/{{ sshkey_user }}/.profile
+    line: '[[ -r $HOME/.profile-ssh ]] && . $HOME/.profile-ssh'
+  when: sshkey_setup_profile
+
+
+
+
+

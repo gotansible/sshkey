@@ -1,0 +1,12 @@
+---
+- hosts: all
+  sudo: true
+  roles:
+    - role: sshkey
+      sshkey_files:
+        - README.md
+      sshkey_folder: /home/vagrant/.ssh/testfolder
+      sshkey_user: vagrant
+      sshkey_group: vagrant
+      sshkey_setup_profile: true
+
