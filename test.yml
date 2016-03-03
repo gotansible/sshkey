@@ -5,8 +5,8 @@
     - role: sshkey
       sshkey_files:
         - README.md
-      sshkey_folder: /home/vagrant/.ssh/testfolder
-      sshkey_user: vagrant
-      sshkey_group: vagrant
+      sshkey_folder: /home/testuser/.ssh/testfolder
+      sshkey_user: testuser
+      sshkey_group: testgroup
       sshkey_setup_profile: true
-
+      sshkey_create_user: true
