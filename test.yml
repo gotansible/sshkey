@@ -10,13 +10,16 @@
       sshkey_group: testgroup
       sshkey_setup_profile: true
       sshkey_create_user: true
+      sshkey_known_hosts_global:
+        - github.com
 
-    - role: sshkey
-      sshkey_credstash_keys:
-        - name: my-secret
-          destination: ~/.ssh/my-key
-      sshkey_folder: /home/testuser/.ssh/testfolder
-      sshkey_user: testuser
-      sshkey_group: testgroup
-      sshkey_setup_profile: false
-      sshkey_create_user: true
+# requires credstash to be setup and aws credentials to be setup
+#    - role: sshkey
+#      sshkey_credstash_keys:
+#        - name: my-secret
+#          destination: ~/.ssh/my-key
+#      sshkey_folder: /home/testuser/.ssh/testfolder
+#      sshkey_user: testuser
+#      sshkey_group: testgroup
+#      sshkey_setup_profile: false
+#      sshkey_create_user: true

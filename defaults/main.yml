@@ -11,3 +11,5 @@ sshkey_files: []
 sshkey_credstash_keys: []
 #  - name: my-key-name
 #    destination: ~/.ssh/id_rsa
+
+sshkey_known_hosts_global: []
