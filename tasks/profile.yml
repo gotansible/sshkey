@@ -1,0 +1,28 @@
+
+- name: sshkey - does .profile exist
+  stat: path=~/.profile
+  register: dot_profile
+  become_user: "{{ sshkey_user }}"
+
+- name: sshkey - .profile
+  template:
+    src=profile-ssh.j2
+    dest=~/.profile-ssh
+    mode=640
+    owner={{ sshkey_user }}
+    group={{ sshkey_group }}
+  when: sshkey_setup_profile
+  become_user: "{{ sshkey_user }}"
+
+- name: sshkey - profile-ssh
+  lineinfile:
+    state: present
+    dest: ~/.profile
+    line: '[[ -r $HOME/.profile-ssh ]] && . $HOME/.profile-ssh'
+  when: sshkey_setup_profile and dot_profile.stat.exists
+  become_user: "{{ sshkey_user }}"
+
+
+
+
+

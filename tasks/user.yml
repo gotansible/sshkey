@@ -1,0 +1,15 @@
+---
+
+- name: sshkey - create group
+  group:
+    name={{ sshkey_group }}
+    state=present
+    system=no
+
+- name: sshkey - create user
+  user:
+    name={{ sshkey_user }}
+    group={{ sshkey_group }}
+    createhome=yes
+    system=no
+

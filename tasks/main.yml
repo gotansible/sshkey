@@ -1,58 +1,11 @@
 ---
 
-- name: sshkey - create group
-  group:
-    name={{ sshkey_group }}
-    state=present
-    system=no
+- name: create user
+  include: user.yml
   when: sshkey_create_user
 
-- name: sshkey - create nginx user
-  user:
-    name={{ sshkey_user }}
-    group={{ sshkey_group }}
-    createhome=yes
-    system=no
-  when: sshkey_create_user
+- name: deploy keys
+  include: keys.yml
 
-- name: sshkey - create ssh destination folder
-  file:
-    state=directory
-    path={{ sshkey_folder }}
-    mode=0700
-    owner={{ sshkey_user }}
-    group={{ sshkey_group }}
-
-- name: sshkey - copy keys
-  copy:
-    src={{ item }}
-    dest={{ sshkey_folder }}
-    mode=600
-    owner={{ sshkey_user }}
-    group={{ sshkey_group }}
-  with_items: sshkey_files
-
-- name: sshkey - does .profile exist
-  stat: path=/home/{{ sshkey_user }}/.profile
-  register: dot_profile
-
-- name: sshkey - .profile
-  template:
-    src=profile-ssh.j2
-    dest=/home/{{ sshkey_user }}/.profile-ssh
-    mode=640
-    owner={{ sshkey_user }}
-    group={{ sshkey_group }}
-  when: sshkey_setup_profile
-
-- name: sshkey - profile-ssh
-  lineinfile:
-    state: present
-    dest: /home/{{ sshkey_user }}/.profile
-    line: '[[ -r $HOME/.profile-ssh ]] && . $HOME/.profile-ssh'
-  when: sshkey_setup_profile and dot_profile.stat.exists
-
-
-
-
-
+- name: profile
+  include: profile.yml

@@ -1,0 +1,41 @@
+---
+
+- name: keys - files - create destination directories
+  file:
+    state=directory
+    path={{ item.destination | dirname }}
+    mode=0700
+    owner={{ sshkey_user }}
+    group={{ sshkey_group }}
+  with_items: sshkey_files
+  become_user: "{{ sshkey_user }}"
+
+- name: keys - copy local file keys
+  copy:
+    src={{ item.source }}
+    dest={{ item.destination }}
+    mode=600
+    owner={{ sshkey_user }}
+    group={{ sshkey_group }}
+  with_items: sshkey_files
+  become_user: "{{ sshkey_user }}"
+
+- name: keys - credstash - create destination directories
+  file:
+    state=directory
+    path={{ item.destination | dirname }}
+    mode=0700
+    owner={{ sshkey_user }}
+    group={{ sshkey_group }}
+  with_items: sshkey_credstash_keys
+  become_user: "{{ sshkey_user }}"
+
+- name: keys - credstash - get secret
+  copy:
+    content={{lookup('credstash', item.name )}}
+    dest={{ item.destination }}
+    mode=600
+    owner={{ sshkey_user }}
+    group={{ sshkey_group }}
+  with_items: sshkey_credstash_keys
+  become_user: "{{ sshkey_user }}"

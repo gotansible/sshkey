@@ -11,8 +11,12 @@ function start_agent {
 
 	/usr/bin/ssh-add ~/.ssh/current
 {% for path in sshkey_files %}
-	ssh-add {{ sshkey_folder}}/{{ path | basename}}
+	ssh-add {{ path.destination }}
 {% endfor %}
+{% for path in sshkey_credstash_keys %}
+	ssh-add {{ path.destination }}
+{% endfor %}
+
 
 }
 

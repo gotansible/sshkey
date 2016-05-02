@@ -4,9 +4,19 @@
   roles:
     - role: sshkey
       sshkey_files:
-        - README.md
-      sshkey_folder: /home/testuser/.ssh/testfolder
+        - source: README.md
+          destination: ~/.ssh/testfolder/my-fake-key
       sshkey_user: testuser
       sshkey_group: testgroup
       sshkey_setup_profile: true
+      sshkey_create_user: true
+
+    - role: sshkey
+      sshkey_credstash_keys:
+        - name: my-secret
+          destination: ~/.ssh/my-key
+      sshkey_folder: /home/testuser/.ssh/testfolder
+      sshkey_user: testuser
+      sshkey_group: testgroup
+      sshkey_setup_profile: false
       sshkey_create_user: true

@@ -1,7 +1,13 @@
 
-sshkey_folder: ~/.ssh/
 sshkey_user: root
 sshkey_group: root
 sshkey_setup_profile: false
-sshkey_files: []
 sshkey_create_user: false
+
+sshkey_files: []
+#  - source: ~/.ssh/tocopy/myfile
+#    destination: ~/.ssh/tocopy/myfile
+
+sshkey_credstash_keys: []
+#  - name: my-key-name
+#    destination: ~/.ssh/id_rsa
