@@ -1,4 +1,7 @@
 
+# subshell method vs single shell method
+# http://docstore.mik.ua/orelly/networking_2ndEd/ssh/ch06_03.htm#ch06-20004.html
+
 SSH_ENV="$HOME/.ssh/environment"
 
 function start_agent {
@@ -31,6 +34,12 @@ if [ -f "${SSH_ENV}" ]; then
 else
     start_agent;
 fi
+
+# causes these to get run on logout in borne type shells
+trap '
+  test -n "$SSH_AGENT_PID"  && eval `ssh-agent -k` ;
+  test -n "$SSH2_AGENT_PID" && kill $SSH2_AGENT_PID
+' 0
 
 
 

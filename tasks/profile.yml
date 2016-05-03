@@ -23,6 +23,3 @@
   become_user: "{{ sshkey_user }}"
 
 
-
-
-

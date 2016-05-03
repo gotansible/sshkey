@@ -1,10 +1,13 @@
 ---
 - hosts: all
   sudo: true
+
+# check out https://github.com/Oefenweb/ansible-ssh-keys
+
   roles:
     - role: sshkey
       sshkey_files:
-        - source: README.md
+        - source: fake_key
           destination: ~/.ssh/testfolder/my-fake-key
       sshkey_user: testuser
       sshkey_group: testgroup
@@ -12,6 +15,7 @@
       sshkey_create_user: true
       sshkey_known_hosts_global:
         - github.com
+
 
 # requires credstash to be setup and aws credentials to be setup
 #    - role: sshkey
